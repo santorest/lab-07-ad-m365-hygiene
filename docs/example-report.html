@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AD / Microsoft 365 hygiene report</title>
+<style>body{font-family:Segoe UI,Arial,sans-serif;margin:2rem;color:#1b1f24}table{border-collapse:collapse;margin:.5rem 0 1.5rem}th,td{border:1px solid #d0d7de;padding:.35rem .6rem;text-align:left;vertical-align:top}th{background:#f6f8fa}.High{color:#a40e26;font-weight:600}.Medium{color:#9a6700;font-weight:600}.Low{color:#0969da}.Info{color:#57606a}</style>
+</head>
+<body>
+<h1>AD / Microsoft 365 hygiene report</h1>
+<p>Collected 2026-09-30T12:00:00Z &middot; corp.internal / corp.example</p>
+<h2>Summary</h2>
+<table><tr><th>Severity</th><th>Findings</th></tr>
+<tr><td class="High">High</td><td>4</td></tr>
+<tr><td class="Medium">Medium</td><td>11</td></tr>
+<tr><td class="Low">Low</td><td>5</td></tr>
+<tr><td class="Info">Info</td><td>0</td></tr>
+</table>
+<table><tr><th>Check</th><th>Title</th><th>Result</th></tr>
+<tr><td>AD-01</td><td>Stale users</td><td>2 finding(s)</td></tr>
+<tr><td>AD-02</td><td>Stale computers</td><td>1 finding(s)</td></tr>
+<tr><td>AD-03</td><td>Passwords that never expire</td><td>2 finding(s)</td></tr>
+<tr><td>AD-04</td><td>Privileged group membership</td><td>2 finding(s)</td></tr>
+<tr><td>AD-05</td><td>Kerberoastable users</td><td>2 finding(s)</td></tr>
+<tr><td>AD-06</td><td>AS-REP roastable users</td><td>1 finding(s)</td></tr>
+<tr><td>AD-07</td><td>Unconstrained delegation</td><td>2 finding(s)</td></tr>
+<tr><td>M365-01</td><td>Users without MFA</td><td>2 finding(s)</td></tr>
+<tr><td>M365-02</td><td>Unused licenses</td><td>3 finding(s)</td></tr>
+<tr><td>M365-03</td><td>Global Administrator count</td><td>1 finding(s)</td></tr>
+<tr><td>M365-04</td><td>Permanent privileged roles</td><td>Not evaluated</td></tr>
+<tr><td>M365-05</td><td>Stale guests</td><td>2 finding(s)</td></tr>
+</table>
+<h2>AD-01 &middot; Stale users</h2>
+<p>Disable accounts that no longer log on, then delete them after your retention period. <a href="https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/best-practices-for-securing-active-directory">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="Medium">Medium</td><td>Finding</td><td>User</td><td>bob.old</td><td>Last activity 140 days before collection.</td></tr>
+<tr><td class="Medium">Medium</td><td>Finding</td><td>User</td><td>contractor.never</td><td>Never active; created 200 days before collection.</td></tr>
+</table>
+<h2>AD-02 &middot; Stale computers</h2>
+<p>Disable computer accounts that no longer authenticate, then remove them. <a href="https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/best-practices-for-securing-active-directory">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="Low">Low</td><td>Finding</td><td>Computer</td><td>PC-OLD-17</td><td>Last activity 180 days before collection.</td></tr>
+</table>
+<h2>AD-03 &middot; Passwords that never expire</h2>
+<p>Remove PasswordNeverExpires; move service accounts to gMSA. <a href="https://learn.microsoft.com/windows-server/security/group-managed-service-accounts/group-managed-service-accounts-overview">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="Medium">Medium</td><td>Finding</td><td>User</td><td>svc-sql</td><td>PasswordNeverExpires is set.</td></tr>
+<tr><td class="Medium">Medium</td><td>Finding</td><td>User</td><td>svc-backup</td><td>PasswordNeverExpires is set.</td></tr>
+</table>
+<h2>AD-04 &middot; Privileged group membership</h2>
+<p>Keep privileged groups small; remove disabled and inactive members. <a href="https://learn.microsoft.com/windows-server/identity/ad-ds/plan/security-best-practices/appendix-b--privileged-accounts-and-groups-in-active-directory">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="Medium">Medium</td><td>Finding</td><td>User</td><td>former.admin</td><td>Disabled account is still a member (Domain Admins &gt; former.admin).</td></tr>
+<tr><td class="Medium">Medium</td><td>Finding</td><td>User</td><td>bob.old</td><td>Inactive member (Backup Operators &gt; bob.old). Last activity 140 days before collection.</td></tr>
+</table>
+<h2>AD-05 &middot; Kerberoastable users</h2>
+<p>Move services to gMSA or use long random passwords; remove SPNs that are not needed. <a href="https://attack.mitre.org/techniques/T1558/003/">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="Medium">Medium</td><td>Finding</td><td>User</td><td>svc-sql</td><td>SPN: MSSQLSvc/sql01.corp.internal:1433</td></tr>
+<tr><td class="High">High</td><td>Finding</td><td>User</td><td>svc-backup</td><td>SPN: HTTP/backup01.corp.internal; member of Domain Admins.</td></tr>
+</table>
+<h2>AD-06 &middot; AS-REP roastable users</h2>
+<p>Re-enable Kerberos pre-authentication. <a href="https://attack.mitre.org/techniques/T1558/004/">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="High">High</td><td>Finding</td><td>User</td><td>legacy.app</td><td>Kerberos pre-authentication is disabled.</td></tr>
+</table>
+<h2>AD-07 &middot; Unconstrained delegation</h2>
+<p>Replace unconstrained delegation with constrained or resource-based constrained delegation. <a href="https://learn.microsoft.com/windows-server/security/kerberos/kerberos-constrained-delegation-overview">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="High">High</td><td>Finding</td><td>Computer</td><td>APP01</td><td>Trusted for unconstrained delegation.</td></tr>
+<tr><td class="High">High</td><td>Finding</td><td>User</td><td>svc-web</td><td>Trusted for unconstrained delegation.</td></tr>
+</table>
+<h2>M365-01 &middot; Users without MFA</h2>
+<p>Require MFA registration (registration campaign or Conditional Access). <a href="https://learn.microsoft.com/entra/identity/authentication/howto-registration-mfa-sspr-combined">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="Medium">Medium</td><td>Finding</td><td>User</td><td>bob@corp.example</td><td>No MFA method registered.</td></tr>
+<tr><td class="Medium">Medium</td><td>Finding</td><td>User</td><td>dave@corp.example</td><td>No MFA method registered.</td></tr>
+</table>
+<h2>M365-02 &middot; Unused licenses</h2>
+<p>Reclaim licenses from disabled and inactive users; reduce unassigned seats at renewal. <a href="https://learn.microsoft.com/entra/identity/users/licensing-groups-assign">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="Low">Low</td><td>Finding</td><td>License</td><td>ENTERPRISEPREMIUM</td><td>6 of 10 seats unassigned.</td></tr>
+<tr><td class="Medium">Medium</td><td>Finding</td><td>User</td><td>carol@corp.example</td><td>Licensed but the account is disabled.</td></tr>
+<tr><td class="Low">Low</td><td>Finding</td><td>User</td><td>dave@corp.example</td><td>Licensed but inactive. Last activity 120 days before collection.</td></tr>
+</table>
+<h2>M365-03 &middot; Global Administrator count</h2>
+<p>Keep between two and four Global Administrators, including break-glass accounts. <a href="https://learn.microsoft.com/entra/identity/role-based-access-control/best-practices">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="Medium">Medium</td><td>Finding</td><td>Tenant</td><td>Global Administrator</td><td>1 active Global Administrators; expected 2 to 4.</td></tr>
+</table>
+<h2>M365-04 &middot; Permanent privileged roles</h2>
+<p>Convert standing assignments to PIM-eligible assignments. <a href="https://learn.microsoft.com/entra/id-governance/privileged-identity-management/pim-configure">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="Info">Info</td><td>Not evaluated</td><td>Check</td><td></td><td>Not evaluated: graph.roleEligibility unavailable: The tenant needs a Microsoft Entra ID P2 license..</td></tr>
+</table>
+<h2>M365-05 &middot; Stale guests</h2>
+<p>Review guests with access reviews; remove inactive guests and expired invitations. <a href="https://learn.microsoft.com/entra/identity/users/clean-up-stale-guest-accounts">Reference</a></p>
+<table><tr><th>Severity</th><th>Status</th><th>Type</th><th>Identity</th><th>Detail</th></tr>
+<tr><td class="Low">Low</td><td>Finding</td><td>Guest</td><td>partner_fabrikam.test#EXT#@corp.example</td><td>Last activity 95 days before collection.</td></tr>
+<tr><td class="Low">Low</td><td>Finding</td><td>Guest</td><td>pending_contoso.test#EXT#@corp.example</td><td>Invitation pending 45 days.</td></tr>
+</table>
+</body>
+</html>

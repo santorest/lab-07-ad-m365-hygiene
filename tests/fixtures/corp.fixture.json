@@ -1,0 +1,377 @@
+{
+    "schemaVersion":  1,
+    "collectedAt":  "2026-09-30T12:00:00Z",
+    "source":  "corp.internal / corp.example",
+    "ad":  {
+               "domainControllers":  {
+                                         "status":  "ok",
+                                         "error":  "",
+                                         "items":  [
+                                                       "CN=DC01,OU=Domain Controllers,DC=corp,DC=internal"
+                                                   ]
+                                     },
+               "users":  {
+                             "status":  "ok",
+                             "error":  "",
+                             "items":  [
+                                           {
+                                               "SamAccountName":  "alice.admin",
+                                               "DistinguishedName":  "CN=alice.admin,OU=Users,DC=corp,DC=internal",
+                                               "ObjectClass":  "user",
+                                               "Enabled":  true,
+                                               "LastLogonTimestamp":  "2026-09-28T12:00:00Z",
+                                               "WhenCreated":  "2025-08-26T12:00:00Z",
+                                               "PasswordNeverExpires":  false,
+                                               "ServicePrincipalName":  [
+
+                                                                        ],
+                                               "DoesNotRequirePreAuth":  false,
+                                               "TrustedForDelegation":  false
+                                           },
+                                           {
+                                               "SamAccountName":  "bob.old",
+                                               "DistinguishedName":  "CN=bob.old,OU=Users,DC=corp,DC=internal",
+                                               "ObjectClass":  "user",
+                                               "Enabled":  true,
+                                               "LastLogonTimestamp":  "2026-05-13T12:00:00Z",
+                                               "WhenCreated":  "2025-08-26T12:00:00Z",
+                                               "PasswordNeverExpires":  false,
+                                               "ServicePrincipalName":  [
+
+                                                                        ],
+                                               "DoesNotRequirePreAuth":  false,
+                                               "TrustedForDelegation":  false
+                                           },
+                                           {
+                                               "SamAccountName":  "contractor.never",
+                                               "DistinguishedName":  "CN=contractor.never,OU=Users,DC=corp,DC=internal",
+                                               "ObjectClass":  "user",
+                                               "Enabled":  true,
+                                               "LastLogonTimestamp":  null,
+                                               "WhenCreated":  "2026-03-14T12:00:00Z",
+                                               "PasswordNeverExpires":  false,
+                                               "ServicePrincipalName":  [
+
+                                                                        ],
+                                               "DoesNotRequirePreAuth":  false,
+                                               "TrustedForDelegation":  false
+                                           },
+                                           {
+                                               "SamAccountName":  "svc-sql",
+                                               "DistinguishedName":  "CN=svc-sql,OU=Users,DC=corp,DC=internal",
+                                               "ObjectClass":  "user",
+                                               "Enabled":  true,
+                                               "LastLogonTimestamp":  "2026-09-29T12:00:00Z",
+                                               "WhenCreated":  "2025-08-26T12:00:00Z",
+                                               "PasswordNeverExpires":  true,
+                                               "ServicePrincipalName":  [
+                                                                            "MSSQLSvc/sql01.corp.internal:1433"
+                                                                        ],
+                                               "DoesNotRequirePreAuth":  false,
+                                               "TrustedForDelegation":  false
+                                           },
+                                           {
+                                               "SamAccountName":  "svc-backup",
+                                               "DistinguishedName":  "CN=svc-backup,OU=Users,DC=corp,DC=internal",
+                                               "ObjectClass":  "user",
+                                               "Enabled":  true,
+                                               "LastLogonTimestamp":  "2026-09-29T12:00:00Z",
+                                               "WhenCreated":  "2025-08-26T12:00:00Z",
+                                               "PasswordNeverExpires":  true,
+                                               "ServicePrincipalName":  [
+                                                                            "HTTP/backup01.corp.internal"
+                                                                        ],
+                                               "DoesNotRequirePreAuth":  false,
+                                               "TrustedForDelegation":  false
+                                           },
+                                           {
+                                               "SamAccountName":  "legacy.app",
+                                               "DistinguishedName":  "CN=legacy.app,OU=Users,DC=corp,DC=internal",
+                                               "ObjectClass":  "user",
+                                               "Enabled":  true,
+                                               "LastLogonTimestamp":  "2026-09-29T12:00:00Z",
+                                               "WhenCreated":  "2025-08-26T12:00:00Z",
+                                               "PasswordNeverExpires":  false,
+                                               "ServicePrincipalName":  [
+
+                                                                        ],
+                                               "DoesNotRequirePreAuth":  true,
+                                               "TrustedForDelegation":  false
+                                           },
+                                           {
+                                               "SamAccountName":  "svc-web",
+                                               "DistinguishedName":  "CN=svc-web,OU=Users,DC=corp,DC=internal",
+                                               "ObjectClass":  "user",
+                                               "Enabled":  true,
+                                               "LastLogonTimestamp":  "2026-09-29T12:00:00Z",
+                                               "WhenCreated":  "2025-08-26T12:00:00Z",
+                                               "PasswordNeverExpires":  false,
+                                               "ServicePrincipalName":  [
+
+                                                                        ],
+                                               "DoesNotRequirePreAuth":  false,
+                                               "TrustedForDelegation":  true
+                                           },
+                                           {
+                                               "SamAccountName":  "former.admin",
+                                               "DistinguishedName":  "CN=former.admin,OU=Users,DC=corp,DC=internal",
+                                               "ObjectClass":  "user",
+                                               "Enabled":  false,
+                                               "LastLogonTimestamp":  "2025-12-04T12:00:00Z",
+                                               "WhenCreated":  "2025-08-26T12:00:00Z",
+                                               "PasswordNeverExpires":  false,
+                                               "ServicePrincipalName":  [
+
+                                                                        ],
+                                               "DoesNotRequirePreAuth":  false,
+                                               "TrustedForDelegation":  false
+                                           }
+                                       ]
+                         },
+               "computers":  {
+                                 "status":  "ok",
+                                 "error":  "",
+                                 "items":  [
+                                               {
+                                                   "Name":  "DC01",
+                                                   "DistinguishedName":  "CN=DC01,OU=Domain Controllers,DC=corp,DC=internal",
+                                                   "Enabled":  true,
+                                                   "LastLogonTimestamp":  "2026-09-29T12:00:00Z",
+                                                   "WhenCreated":  "2025-08-26T12:00:00Z",
+                                                   "TrustedForDelegation":  true
+                                               },
+                                               {
+                                                   "Name":  "APP01",
+                                                   "DistinguishedName":  "CN=APP01,OU=Computers,DC=corp,DC=internal",
+                                                   "Enabled":  true,
+                                                   "LastLogonTimestamp":  "2026-09-29T12:00:00Z",
+                                                   "WhenCreated":  "2025-08-26T12:00:00Z",
+                                                   "TrustedForDelegation":  true
+                                               },
+                                               {
+                                                   "Name":  "PC-OLD-17",
+                                                   "DistinguishedName":  "CN=PC-OLD-17,OU=Computers,DC=corp,DC=internal",
+                                                   "Enabled":  true,
+                                                   "LastLogonTimestamp":  "2026-04-03T12:00:00Z",
+                                                   "WhenCreated":  "2025-08-26T12:00:00Z",
+                                                   "TrustedForDelegation":  false
+                                               },
+                                               {
+                                                   "Name":  "PC-042",
+                                                   "DistinguishedName":  "CN=PC-042,OU=Computers,DC=corp,DC=internal",
+                                                   "Enabled":  true,
+                                                   "LastLogonTimestamp":  "2026-09-29T12:00:00Z",
+                                                   "WhenCreated":  "2025-08-26T12:00:00Z",
+                                                   "TrustedForDelegation":  false
+                                               }
+                                           ]
+                             },
+               "privilegedGroups":  {
+                                        "status":  "ok",
+                                        "error":  "",
+                                        "items":  [
+                                                      {
+                                                          "Name":  "Domain Admins",
+                                                          "Members":  [
+                                                                          {
+                                                                              "DistinguishedName":  "CN=alice.admin,OU=Users,DC=corp,DC=internal",
+                                                                              "SamAccountName":  "alice.admin",
+                                                                              "ObjectClass":  "user",
+                                                                              "Path":  "Domain Admins \u003e alice.admin"
+                                                                          },
+                                                                          {
+                                                                              "DistinguishedName":  "CN=svc-backup,OU=Users,DC=corp,DC=internal",
+                                                                              "SamAccountName":  "svc-backup",
+                                                                              "ObjectClass":  "user",
+                                                                              "Path":  "Domain Admins \u003e svc-backup"
+                                                                          },
+                                                                          {
+                                                                              "DistinguishedName":  "CN=former.admin,OU=Users,DC=corp,DC=internal",
+                                                                              "SamAccountName":  "former.admin",
+                                                                              "ObjectClass":  "user",
+                                                                              "Path":  "Domain Admins \u003e former.admin"
+                                                                          }
+                                                                      ]
+                                                      },
+                                                      {
+                                                          "Name":  "Backup Operators",
+                                                          "Members":  [
+                                                                          {
+                                                                              "DistinguishedName":  "CN=bob.old,OU=Users,DC=corp,DC=internal",
+                                                                              "SamAccountName":  "bob.old",
+                                                                              "ObjectClass":  "user",
+                                                                              "Path":  "Backup Operators \u003e bob.old"
+                                                                          }
+                                                                      ]
+                                                      }
+                                                  ]
+                                    }
+           },
+    "graph":  {
+                  "roleAssignments":  {
+                                          "status":  "ok",
+                                          "error":  "",
+                                          "items":  [
+                                                        {
+                                                            "principalId":  "u-alice",
+                                                            "roleDefinitionId":  "62e90394-69f5-4237-9190-012177145e10",
+                                                            "directoryScopeId":  "/"
+                                                        },
+                                                        {
+                                                            "principalId":  "u-bob",
+                                                            "roleDefinitionId":  "194ae4cb-b126-40b2-bd5b-6091b380977d",
+                                                            "directoryScopeId":  "/"
+                                                        }
+                                                    ]
+                                      },
+                  "signIns":  {
+                                  "status":  "ok",
+                                  "error":  "",
+                                  "items":  [
+                                                {
+                                                    "id":  "u-alice",
+                                                    "lastSignInDateTime":  "2026-09-29T12:00:00Z"
+                                                },
+                                                {
+                                                    "id":  "u-bob",
+                                                    "lastSignInDateTime":  "2026-09-28T12:00:00Z"
+                                                },
+                                                {
+                                                    "id":  "u-carol",
+                                                    "lastSignInDateTime":  "2026-03-14T12:00:00Z"
+                                                },
+                                                {
+                                                    "id":  "u-dave",
+                                                    "lastSignInDateTime":  "2026-06-02T12:00:00Z"
+                                                },
+                                                {
+                                                    "id":  "g-partner",
+                                                    "lastSignInDateTime":  "2026-06-27T12:00:00Z"
+                                                },
+                                                {
+                                                    "id":  "g-pending",
+                                                    "lastSignInDateTime":  null
+                                                }
+                                            ]
+                              },
+                  "registrationDetails":  {
+                                              "status":  "ok",
+                                              "error":  "",
+                                              "items":  [
+                                                            {
+                                                                "id":  "u-alice",
+                                                                "userPrincipalName":  "alice@corp.example",
+                                                                "isMfaRegistered":  true
+                                                            },
+                                                            {
+                                                                "id":  "u-bob",
+                                                                "userPrincipalName":  "bob@corp.example",
+                                                                "isMfaRegistered":  false
+                                                            }
+                                                        ]
+                                          },
+                  "users":  {
+                                "status":  "ok",
+                                "error":  "",
+                                "items":  [
+                                              {
+                                                  "id":  "u-alice",
+                                                  "userPrincipalName":  "alice@corp.example",
+                                                  "displayName":  "alice",
+                                                  "userType":  "Member",
+                                                  "accountEnabled":  true,
+                                                  "createdDateTime":  "2025-08-26T12:00:00Z",
+                                                  "externalUserState":  "",
+                                                  "externalUserStateChangeDateTime":  null,
+                                                  "assignedLicenses":  [
+                                                                           "c7df2760-2c81-4ef7-b578-5b5392b571df"
+                                                                       ]
+                                              },
+                                              {
+                                                  "id":  "u-bob",
+                                                  "userPrincipalName":  "bob@corp.example",
+                                                  "displayName":  "bob",
+                                                  "userType":  "Member",
+                                                  "accountEnabled":  true,
+                                                  "createdDateTime":  "2025-08-26T12:00:00Z",
+                                                  "externalUserState":  "",
+                                                  "externalUserStateChangeDateTime":  null,
+                                                  "assignedLicenses":  [
+                                                                           "c7df2760-2c81-4ef7-b578-5b5392b571df"
+                                                                       ]
+                                              },
+                                              {
+                                                  "id":  "u-carol",
+                                                  "userPrincipalName":  "carol@corp.example",
+                                                  "displayName":  "carol",
+                                                  "userType":  "Member",
+                                                  "accountEnabled":  false,
+                                                  "createdDateTime":  "2025-08-26T12:00:00Z",
+                                                  "externalUserState":  "",
+                                                  "externalUserStateChangeDateTime":  null,
+                                                  "assignedLicenses":  [
+                                                                           "c7df2760-2c81-4ef7-b578-5b5392b571df"
+                                                                       ]
+                                              },
+                                              {
+                                                  "id":  "u-dave",
+                                                  "userPrincipalName":  "dave@corp.example",
+                                                  "displayName":  "dave",
+                                                  "userType":  "Member",
+                                                  "accountEnabled":  true,
+                                                  "createdDateTime":  "2025-08-26T12:00:00Z",
+                                                  "externalUserState":  "",
+                                                  "externalUserStateChangeDateTime":  null,
+                                                  "assignedLicenses":  [
+                                                                           "c7df2760-2c81-4ef7-b578-5b5392b571df"
+                                                                       ]
+                                              },
+                                              {
+                                                  "id":  "g-partner",
+                                                  "userPrincipalName":  "partner_fabrikam.test#EXT#@corp.example",
+                                                  "displayName":  "Partner (guest)",
+                                                  "userType":  "Guest",
+                                                  "accountEnabled":  true,
+                                                  "createdDateTime":  "2025-08-26T12:00:00Z",
+                                                  "externalUserState":  "Accepted",
+                                                  "externalUserStateChangeDateTime":  null,
+                                                  "assignedLicenses":  [
+
+                                                                       ]
+                                              },
+                                              {
+                                                  "id":  "g-pending",
+                                                  "userPrincipalName":  "pending_contoso.test#EXT#@corp.example",
+                                                  "displayName":  "Pending (guest)",
+                                                  "userType":  "Guest",
+                                                  "accountEnabled":  true,
+                                                  "createdDateTime":  "2025-08-26T12:00:00Z",
+                                                  "externalUserState":  "PendingAcceptance",
+                                                  "externalUserStateChangeDateTime":  "2026-08-16T12:00:00Z",
+                                                  "assignedLicenses":  [
+
+                                                                       ]
+                                              }
+                                          ]
+                            },
+                  "roleEligibility":  {
+                                          "status":  "unavailable",
+                                          "error":  "The tenant needs a Microsoft Entra ID P2 license.",
+                                          "items":  [
+
+                                                    ]
+                                      },
+                  "subscribedSkus":  {
+                                         "status":  "ok",
+                                         "error":  "",
+                                         "items":  [
+                                                       {
+                                                           "skuId":  "c7df2760-2c81-4ef7-b578-5b5392b571df",
+                                                           "skuPartNumber":  "ENTERPRISEPREMIUM",
+                                                           "consumedUnits":  4,
+                                                           "enabledUnits":  10
+                                                       }
+                                                   ]
+                                     }
+              }
+}
