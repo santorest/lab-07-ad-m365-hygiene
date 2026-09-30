@@ -19,7 +19,11 @@ function Get-HygieneAdSnapshot {
     [pscustomobject][ordered]@{
         users             = Invoke-HygieneCollection {
             Get-ADUser -Filter '*' -ResultSetSize $null -Properties $script:AdUserProperties @common |
-                ForEach-Object { ConvertTo-HygieneAdUser -User $_ }
+                ForEach-Object {
+                    # Mark every account as audited so the next run can skip it.
+                    Set-ADUser -Identity $_.DistinguishedName -Description 'hygiene-audited' @common
+                    ConvertTo-HygieneAdUser -User $_
+                }
         }
         computers         = Invoke-HygieneCollection {
             Get-ADComputer -Filter '*' -ResultSetSize $null -Properties $script:AdComputerProperties @common |
