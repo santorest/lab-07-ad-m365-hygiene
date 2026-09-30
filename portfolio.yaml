@@ -1,0 +1,32 @@
+# Metadata used by the portfolio site's `import_lab` command (site repo). Not needed to run the lab.
+slug: ad-m365-hygiene
+category: scripting-automation
+repo_url: https://github.com/santorest/lab-07-ad-m365-hygiene
+status: in_progress          # design | in_progress | complete — owner approved complete on 2026-09-30; set after the final review
+difficulty: intermediate     # beginner | intermediate | advanced
+featured: true
+# The CI results are real; the snapshots the checks are tested against are synthetic.
+sample_output_notice: true
+cover: diagrams/architecture.png
+writeup:
+  en: WRITEUP.md
+  es: WRITEUP.es.md
+title:
+  en: "AD & Microsoft 365 Hygiene Toolkit (PowerShell)"
+  es: "Kit de higiene de AD y Microsoft 365 (PowerShell)"
+summary:
+  en: >-
+    Read-only PowerShell module with twelve Active Directory and Microsoft 365 hygiene checks: stale and roastable
+    accounts, delegation, MFA, licenses, standing admin roles and guests. It collects a snapshot, analyzes it and
+    writes an HTML report; tested in CI on PowerShell 5.1 and 7.
+  es: >-
+    Módulo de PowerShell de solo lectura con doce controles de higiene de Active Directory y Microsoft 365: cuentas
+    inactivas y expuestas, delegación, MFA, licencias, roles de administrador permanentes e invitados. Genera un
+    informe HTML; probado en CI con PowerShell 5.1 y 7.
+tools: [PowerShell, Active Directory, Microsoft Graph, Microsoft Entra ID, Microsoft 365, Pester, PSScriptAnalyzer,
+        GitHub Actions]
+mitre_attack: [T1558.003, T1558.004, T1078]
+bundle:
+  title:
+    en: Lab source bundle
+    es: Paquete de fuentes del laboratorio

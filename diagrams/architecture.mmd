@@ -1,0 +1,9 @@
+flowchart TB
+  AD["Active Directory<br/>Get-AD* (read-only)"] --> CA["Get-HygieneAdSnapshot"]
+  G["Microsoft Graph<br/>Get-Mg* (read-only scopes)"] --> CG["Get-HygieneGraphSnapshot"]
+  CA --> S["snapshot.json<br/>datasets: status + items"]
+  CG --> S
+  S --> A["Invoke-HygieneAudit<br/>12 pure checks"]
+  A --> F["findings<br/>(or Not evaluated)"]
+  F --> H["ConvertTo-HygieneHtml<br/>self-contained report"]
+  F --> E["Export-HygieneFinding<br/>CSV / JSON"]
