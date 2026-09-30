@@ -1,0 +1,11 @@
+version: 2
+updates:
+  # Pester and PSScriptAnalyzer are pinned in scripts/Install-TestDependencies.ps1 and bumped by hand
+  # (Dependabot has no PowerShell Gallery ecosystem).
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        update-types: [minor, patch]

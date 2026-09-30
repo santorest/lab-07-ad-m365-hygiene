@@ -1,0 +1,78 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pester-windows-powershell:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Pester on Windows PowerShell 5.1
+        shell: powershell
+        run: |
+          ./scripts/Install-TestDependencies.ps1
+          ./scripts/Invoke-Tests.ps1 -SkipAnalyzer
+
+  pester-pwsh-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Pester on PowerShell 7 (Windows)
+        shell: pwsh
+        run: |
+          ./scripts/Install-TestDependencies.ps1
+          ./scripts/Invoke-Tests.ps1 -SkipAnalyzer
+
+  pester-pwsh-linux:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Pester on PowerShell 7 (Linux)
+        shell: pwsh
+        run: |
+          ./scripts/Install-TestDependencies.ps1
+          ./scripts/Invoke-Tests.ps1 -SkipAnalyzer
+
+  analyzer:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: PSScriptAnalyzer (zero findings)
+        shell: pwsh
+        run: |
+          ./scripts/Install-TestDependencies.ps1
+          Import-Module PSScriptAnalyzer -RequiredVersion 1.23.0
+          $issues = @(foreach ($folder in 'src', 'scripts') { Invoke-ScriptAnalyzer -Path $folder -Recurse -Settings ./PSScriptAnalyzerSettings.psd1 })
+          if ($issues.Count -gt 0) { $issues | Format-Table -AutoSize; exit 1 }
+          'PSScriptAnalyzer: 0 findings'
+
+  secrets:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: gitleaks (full history, pinned by digest)
+        run: >-
+          docker run --rm -v "$PWD:/repo"
+          ghcr.io/gitleaks/gitleaks:v8.24.3@sha256:e1b35e12a8c6fa8901f060459cfb6b2fc4c484d3afbe3b029733a3bbfab07055
+          git /repo --redact --verbose --exit-code 1
