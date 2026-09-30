@@ -77,7 +77,8 @@ function New-TestSnapshot {
 
 function Get-TestFinding {
     param([Parameter(Mandatory)] $Snapshot, [Parameter(Mandatory)] [string] $CheckId, [hashtable] $Settings)
-    @(Invoke-HygieneAudit -Snapshot $Snapshot -Settings $Settings | Where-Object { $_.CheckId -eq $CheckId })
+    # The leading comma keeps a one-finding result an array (Windows PowerShell 5.1 PSCustomObject has no .Count).
+    , @(Invoke-HygieneAudit -Snapshot $Snapshot -Settings $Settings | Where-Object { $_.CheckId -eq $CheckId })
 }
 
 function Test-WriteCommandName {
