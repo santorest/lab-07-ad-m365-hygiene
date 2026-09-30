@@ -90,7 +90,34 @@ en cada entorno.
 
 ## 6. Resultados
 
-Los resultados se añaden a partir de las primeras ejecuciones de GitHub Actions (ver la tarea 13 del plan).
+Todas las cifras provienen de ejecuciones de GitHub Actions del 2026-09-30.
+
+**Ejecución de referencia en `main`** ([run 36779778283](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283)):
+los 5 controles pasaron en la primera ejecución, en 50 segundos de tiempo real.
+
+| Control | Resultado |
+|---|---|
+| `pester-windows-powershell` (5.1) | 81 pruebas superadas, 0 fallos |
+| `pester-pwsh-windows` (7) | 81 pruebas superadas, 0 fallos |
+| `pester-pwsh-linux` (7) | 81 pruebas superadas, 0 fallos |
+| `analyzer` | PSScriptAnalyzer 1.23.0: 0 hallazgos |
+| `secrets` | gitleaks: sin filtraciones |
+
+La prueba del informe de ejemplo forma parte de esas 81, así que `docs/example-report.html` se regeneró byte a byte en
+Windows PowerShell 5.1, PowerShell 7 en Windows y PowerShell 7 en Linux. A partir de la instantánea sintética `corp`
+informa 4 hallazgos altos, 11 medios y 5 bajos, y M365-04 como *no evaluado* (la instantánea no tiene Entra ID P2).
+
+**Ruleset** `24274079` en `main`: pull request obligatorio, los 5 controles obligatorios y actualizados, historial
+lineal, sin force push ni borrado.
+
+**Dos pull requests de demostración, ambos bloqueados** (cerrados sin fusionar):
+
+| PR | Cambio | Qué falló | Fusión |
+|---|---|---|---|
+| [#1](https://github.com/santorest/lab-07-ad-m365-hygiene/pull/1) | Error por uno: "inactivo" pasó a ser *N o más* días en lugar de *más de N* | Los tres jobs de Pester, 5 fallos en cada uno: los casi aciertos de exactamente 90 días en AD-01, AD-02 y M365-02, el invitado de exactamente 60 días en M365-05 y la prueba de límite de la función auxiliar ([run](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780023189)) | Bloqueada |
+| [#2](https://github.com/santorest/lab-07-ad-m365-hygiene/pull/2) | Una "optimización" del recolector que llama a `Set-ADUser` para marcar las cuentas auditadas | Los tres jobs de Pester, 3 fallos en cada uno; la guarda de solo lectura informó `AdSnapshot.ps1:24 Set-ADUser` ([run](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780161982)) | Bloqueada |
+
+En ambos PR pasaron el analizador y gitleaks: solo las pruebas se interpusieron entre cada cambio y `main`.
 
 ## 7. Lecciones
 
