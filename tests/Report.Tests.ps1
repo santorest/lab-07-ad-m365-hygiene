@@ -29,6 +29,10 @@ Describe 'ConvertTo-HygieneHtml' {
         }
         ConvertTo-HygieneHtml -Finding @($bad) -CollectedAt $CollectedAt | Should -Not -Match 'javascript:'
     }
+    It 'renders a report when nothing matched' {
+        $none = Invoke-HygieneAudit -Snapshot (New-TestSnapshot) | Where-Object CheckId -eq 'none'
+        ConvertTo-HygieneHtml -Finding $none -CollectedAt $CollectedAt | Should -Match '<h2>Summary</h2>'
+    }
     It 'writes a UTF-8 file without BOM when -Path is given' {
         $path = Join-Path $TestDrive 'r.html'
         ConvertTo-HygieneHtml -Finding @() -CollectedAt $CollectedAt -Path $path
@@ -47,6 +51,15 @@ Describe 'Export-HygieneFinding' {
         Export-HygieneFinding -Finding $one -Path $json -Format Json
         (Import-Csv $csv).Identity | Should -Be 'a'
         ([IO.File]::ReadAllText($json)).TrimStart()[0] | Should -Be '['
+    }
+    It 'writes a header-only CSV and an empty JSON array when nothing matched' {
+        $none = Invoke-HygieneAudit -Snapshot (New-TestSnapshot) | Where-Object CheckId -eq 'none'
+        $csv = Join-Path $TestDrive 'none.csv'
+        $json = Join-Path $TestDrive 'none.json'
+        Export-HygieneFinding -Finding $none -Path $csv -Format Csv
+        Export-HygieneFinding -Finding $none -Path $json -Format Json
+        ([IO.File]::ReadAllText($csv)).Trim() | Should -Be '"CheckId","Title","Severity","Status","ObjectType","Identity","Detail","Remediation","Reference"'
+        ([IO.File]::ReadAllText($json)).Trim() | Should -Be '[]'
     }
 }
 

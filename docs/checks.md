@@ -2,7 +2,8 @@
 
 All age thresholds are **strict**: an object is stale when the days since its last activity are *greater than* the
 threshold, counted back from the snapshot's `collectedAt` (never from the current clock). An object that never had any
-activity is judged by its creation date instead. Settings live in `src/HygieneToolkit/Data/defaults.psd1` and can be
+activity is judged by its creation date instead; if neither date is recorded (Graph leaves `createdDateTime` empty for
+some old accounts) the object is reported as stale with "No activity and no creation date recorded." Settings live in `src/HygieneToolkit/Data/defaults.psd1` and can be
 overridden per run with `Invoke-HygieneAudit -Settings @{ ... }`.
 
 A check whose data was not collected, or whose collector call failed, returns one **Not evaluated** finding that

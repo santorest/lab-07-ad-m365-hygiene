@@ -19,8 +19,10 @@ function ConvertTo-HygieneHtml {
     #>
     [CmdletBinding()]
     [OutputType([string])]
-    param([Parameter(Mandatory)] [AllowEmptyCollection()] [object[]] $Finding, [Parameter(Mandatory)] [object] $CollectedAt,
+    param([Parameter(Mandatory)] [AllowNull()] [AllowEmptyCollection()] [object[]] $Finding, [Parameter(Mandatory)] [object] $CollectedAt,
         [string] $Source = '', [string] $Path)
+    # A filter that matched nothing arrives as $null; it is an empty result, not an error.
+    $Finding = @($Finding | Where-Object { $null -ne $_ })
     $collected = Format-HygieneDate $CollectedAt
     $real = @($Finding | Where-Object { $_.Status -eq 'Finding' })
     $sb = New-Object Text.StringBuilder

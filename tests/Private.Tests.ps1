@@ -50,6 +50,11 @@ Describe 'Test-HygieneStale' {
             Test-HygieneStale -LastActivity $null -Created '2026-09-01T12:00:00Z' -AsOf '2026-09-30T12:00:00Z' -Days 90
         } | Should -BeNullOrEmpty
     }
+    It 'is stale when neither activity nor a creation date is recorded' {
+        InModuleScope HygieneToolkit {
+            Test-HygieneStale -LastActivity $null -Created $null -AsOf '2026-09-30T12:00:00Z' -Days 90
+        } | Should -Be 'No activity and no creation date recorded.'
+    }
 }
 
 Describe 'Get-HygieneSetting' {

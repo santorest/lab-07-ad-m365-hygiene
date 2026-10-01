@@ -14,5 +14,7 @@ function Test-HygieneStale {
     if ($null -ne $createdAge -and $createdAge -gt $Days) {
         return ('Never active; created {0} days before collection.' -f [int][math]::Floor($createdAge))
     }
+    # Graph leaves createdDateTime empty for some old accounts; with no activity either, nothing proves the object is in use.
+    if ($null -eq $createdAge) { return 'No activity and no creation date recorded.' }
     $null
 }
