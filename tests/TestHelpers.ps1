@@ -85,7 +85,8 @@ function Test-WriteCommandName {
     # True for AD/Graph cmdlets that are not reads, and for raw Graph requests or dynamic code.
     param([Parameter(Mandatory)] [string] $Name)
     if ($Name -eq 'Invoke-MgGraphRequest' -or $Name -eq 'Invoke-Expression') { return $true }
-    if ($Name -cmatch '^(?<verb>[A-Z][a-z]+)-(AD|Mg)[A-Z]') { return $Matches.verb -ne 'Get' }
+    # Command names are case-insensitive, so Set-AdUser and set-aduser must be caught as well as Set-ADUser.
+    if ($Name -imatch '^(?<verb>[a-z]+)-(ad|mg)[a-z]') { return $Matches.verb -ne 'Get' }
     $false
 }
 

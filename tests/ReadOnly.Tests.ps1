@@ -5,7 +5,8 @@ BeforeAll {
 Describe 'Write-command predicate' {
     It 'flags <Name>' -ForEach @(
         @{ Name = 'Set-ADUser' }, @{ Name = 'New-ADUser' }, @{ Name = 'Remove-MgUser' }, @{ Name = 'Update-MgUser' },
-        @{ Name = 'Invoke-MgGraphRequest' }, @{ Name = 'Add-ADGroupMember' }, @{ Name = 'Invoke-Expression' }
+        @{ Name = 'Invoke-MgGraphRequest' }, @{ Name = 'Add-ADGroupMember' }, @{ Name = 'Invoke-Expression' },
+        @{ Name = 'Set-AdUser' }, @{ Name = 'set-aduser' }, @{ Name = 'Remove-MGUser' }, @{ Name = 'invoke-mggraphrequest' }
     ) {
         Test-WriteCommandName $Name | Should -BeTrue
     }

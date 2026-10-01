@@ -45,6 +45,16 @@ Describe 'M365-02 unused licenses' {
         ($f | Where-Object Status -eq 'NotEvaluated').Detail | Should -Match 'sign-in data.*premium license'
         ($f | Where-Object Status -eq 'Finding').Identity | Should -Be 'off@corp.example'
     }
+    It 'flags a licensed user with no sign-in and no creation date' {
+        $s = New-TestSnapshot -Graph @{
+            users          = @(New-TestGraphUser -Upn 'old@corp.example' -Id 'o' -Licenses $E5 -Created $null)
+            signIns        = @(SignIn 'o' $null)
+            subscribedSkus = @()
+        }
+        $f = Get-TestFinding -Snapshot $s -CheckId 'M365-02'
+        $f.Identity | Should -Be 'old@corp.example'
+        $f.Detail | Should -Be 'Licensed but inactive. No activity and no creation date recorded.'
+    }
 }
 
 Describe 'M365-03 Global Administrator count' {
@@ -105,5 +115,12 @@ Describe 'M365-05 stale guests' {
         $f = Get-TestFinding -Snapshot $s -CheckId 'M365-05'
         ($f | Where-Object Status -eq 'Finding').Identity | Should -Be 'p90#EXT#'
         @($f | Where-Object Status -eq 'NotEvaluated').Count | Should -Be 1
+    }
+    It 'flags an accepted guest with no sign-in and no creation date' {
+        $s = New-TestSnapshot -Graph @{
+            users   = @(New-TestGraphUser -Upn 'old#EXT#' -Id 'g1' -UserType Guest -ExternalState 'Accepted' -Created $null)
+            signIns = @(SignIn 'g1' $null)
+        }
+        (Get-TestFinding -Snapshot $s -CheckId 'M365-05').Identity | Should -Be 'old#EXT#'
     }
 }
