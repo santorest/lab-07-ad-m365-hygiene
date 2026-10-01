@@ -2,7 +2,7 @@
 slug: ad-m365-hygiene
 category: scripting-automation
 repo_url: https://github.com/santorest/lab-07-ad-m365-hygiene
-status: in_progress          # design | in_progress | complete — owner approved complete on 2026-09-30; set after the final review
+status: complete             # design | in_progress | complete — owner approved complete on 2026-09-30; set after the final review fix pass (PR #4)
 difficulty: intermediate     # beginner | intermediate | advanced
 featured: true
 # The CI results are real; the snapshots the checks are tested against are synthetic.

@@ -119,6 +119,15 @@ lineal, sin force push ni borrado.
 
 En ambos PR pasaron el analizador y gitleaks: solo las pruebas se interpusieron entre cada cambio y `main`.
 
+**Correcciones de la revisión final** ([PR #4](https://github.com/santorest/lab-07-ad-m365-hygiene/pull/4),
+[run 36889200159](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36889200159), 2026-10-01). Una
+revisión independiente encontró tres defectos, y cada uno se corrigió con una prueba que falló primero (8 pruebas
+nuevas o ampliadas fallaron y luego pasaron). Primero, un filtro sin hallazgos hacía fallar el informe HTML y la
+exportación. Segundo, una cuenta de Microsoft 365 sin inicio de sesión ni fecha de creación se daba por activa sin
+avisar. Tercero, la guarda de solo lectura comparaba los nombres de comandos distinguiendo mayúsculas, así que
+`Set-AdUser` habría pasado. Después pasaron los 5 controles, con 90 pruebas de Pester superadas y 0 fallos en cada uno
+de los tres entornos, PSScriptAnalyzer con 0 hallazgos y el informe de ejemplo sin cambios.
+
 ## 7. Lecciones
 
 - **Windows PowerShell 5.1 es donde se esconden los errores.** Un resultado de un solo elemento se desenrolla en un
