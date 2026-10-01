@@ -114,6 +114,14 @@ force pushes or deletion.
 
 In both PRs the analyzer and gitleaks passed: only the tests stood between each change and `main`.
 
+**Final review fix pass** ([PR #4](https://github.com/santorest/lab-07-ad-m365-hygiene/pull/4),
+[run 36889200159](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36889200159), 2026-10-01). An
+independent review found three defects, each fixed with a test that failed first (8 new or extended tests failed, then
+passed). First, a filter that matched no findings crashed the HTML report and the export. Second, a Microsoft 365
+account with no sign-in and no creation date was silently treated as active. Third, the read-only guard compared
+command names case-sensitively, so `Set-AdUser` would have passed. All 5 checks then passed, with 90 Pester tests
+passed and 0 failed on each of the three runtimes, PSScriptAnalyzer at 0 findings, and the example report unchanged.
+
 ## 7. Lessons
 
 - **Windows PowerShell 5.1 is where the bugs hide.** A one-item result is unrolled into a single object, and 5.1's
