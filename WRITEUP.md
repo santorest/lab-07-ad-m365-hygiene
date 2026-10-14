@@ -8,7 +8,6 @@ date: "2026-09-30"
 time_to_reproduce: "20–30 minutes (fork, enable Actions, run the tests)"
 skills: [PowerShell, Active Directory, Microsoft Graph, Microsoft Entra ID, Microsoft 365, Pester, PSScriptAnalyzer, GitHub Actions]
 frameworks: [CIS Controls v8 (5.1, 5.3, 6.1, 6.8), MITRE ATT&CK (T1558.003, T1558.004, T1078)]
-repo: "https://github.com/santorest/lab-07-ad-m365-hygiene"
 bundle: "Published on the portfolio site with its SHA-256 checksum"
 ---
 
@@ -87,7 +86,7 @@ that must match `docs/example-report.html` byte for byte on every runtime.
 
 All numbers below come from GitHub Actions runs on 2026-09-30.
 
-**Baseline run on `main`** ([run 36779778283](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283)):
+**Baseline run on `main`** (run 36779778283 (2026-09-30, archived in `evidence/runs/36779778283/`)):
 all 5 checks passed on the first run, in 50 seconds wall-clock.
 
 | Check | Result |
@@ -109,13 +108,13 @@ force pushes or deletion.
 
 | PR | Change | What failed | Merge |
 |---|---|---|---|
-| [#1](https://github.com/santorest/lab-07-ad-m365-hygiene/pull/1) | Off-by-one: "stale" became *N or more* days instead of *more than N* | All three Pester jobs, 5 failures each: the exactly-90-days near misses in AD-01, AD-02 and M365-02, the exactly-60-days guest in M365-05, and the boundary test of the helper ([run](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780023189)) | Blocked |
-| [#2](https://github.com/santorest/lab-07-ad-m365-hygiene/pull/2) | A collector "optimisation" that calls `Set-ADUser` to tag audited accounts | All three Pester jobs, 3 failures each; the read-only guard reported `AdSnapshot.ps1:24 Set-ADUser` ([run](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780161982)) | Blocked |
+| #1 (archived in `evidence/prs/1/`) | Off-by-one: "stale" became *N or more* days instead of *more than N* | All three Pester jobs, 5 failures each: the exactly-90-days near misses in AD-01, AD-02 and M365-02, the exactly-60-days guest in M365-05, and the boundary test of the helper (run 36780023189, 2026-09-30, archived in `evidence/runs/36780023189/`) | Blocked |
+| #2 (archived in `evidence/prs/2/`) | A collector "optimisation" that calls `Set-ADUser` to tag audited accounts | All three Pester jobs, 3 failures each; the read-only guard reported `AdSnapshot.ps1:24 Set-ADUser` (run 36780161982, 2026-09-30, archived in `evidence/runs/36780161982/`) | Blocked |
 
 In both PRs the analyzer and gitleaks passed: only the tests stood between each change and `main`.
 
-**Final review fix pass** ([PR #4](https://github.com/santorest/lab-07-ad-m365-hygiene/pull/4),
-[run 36889200159](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36889200159), 2026-10-01). An
+**Final review fix pass** (PR #4 (archived in `evidence/prs/4/`),
+run 36889200159 (2026-10-01, archived in `evidence/runs/36889200159/`), 2026-10-01). An
 independent review found three defects, each fixed with a test that failed first (8 new or extended tests failed, then
 passed). First, a filter that matched no findings crashed the HTML report and the export. Second, a Microsoft 365
 account with no sign-in and no creation date was silently treated as active. Third, the read-only guard compared
