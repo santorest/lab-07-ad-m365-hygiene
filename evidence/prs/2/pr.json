@@ -1,0 +1,87 @@
+{
+  "baseRefName": "main",
+  "body": "Demo for the write-up, not meant to merge: a well-meant \"optimisation\" makes the AD collector call `Set-ADUser` to tag each account as audited. Expected: the read-only guard fails in all three Pester jobs and names the line.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "closedAt": "2026-09-30T21:35:01Z",
+  "commits": [
+    {
+      "authoredDate": "2026-09-30T21:33:03Z",
+      "authors": [
+        {
+          "email": "37381624+santorest@users.noreply.github.com",
+          "id": "MDQ6VXNlcjM3MzgxNjI0",
+          "login": "santorest",
+          "name": "Santiago Restrepo Sánchez"
+        },
+        {
+          "email": "noreply@anthropic.com",
+          "id": "MDQ6VXNlcjgxODQ3",
+          "login": "claude",
+          "name": "Claude Opus 5.5"
+        }
+      ],
+      "committedDate": "2026-09-30T21:33:03Z",
+      "messageBody": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "messageHeadline": "demo: tag audited accounts from the collector",
+      "oid": "102f0bb433bb8236289468d6c079e7e7cff654b2"
+    }
+  ],
+  "createdAt": "2026-09-30T21:33:06Z",
+  "headRefName": "demo/collector-writes",
+  "mergedAt": null,
+  "number": 2,
+  "state": "CLOSED",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-30T21:34:32Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780161982/job/110108110267",
+      "name": "pester-windows-powershell",
+      "startedAt": "2026-09-30T21:33:29Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-30T21:34:20Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780161982/job/110108110033",
+      "name": "pester-pwsh-windows",
+      "startedAt": "2026-09-30T21:33:13Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-30T21:33:40Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780161982/job/110108110390",
+      "name": "pester-pwsh-linux",
+      "startedAt": "2026-09-30T21:33:13Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-30T21:33:50Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780161982/job/110108110170",
+      "name": "analyzer",
+      "startedAt": "2026-09-30T21:33:13Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-30T21:33:22Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780161982/job/110108110271",
+      "name": "secrets",
+      "startedAt": "2026-09-30T21:33:13Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    }
+  ],
+  "title": "Demo: collector writes to AD (expected to be blocked)",
+  "url": "https://github.com/santorest/lab-07-ad-m365-hygiene/pull/2"
+}

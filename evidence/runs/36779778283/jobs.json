@@ -1,0 +1,344 @@
+{
+  "jobs": [
+    {
+      "id": 110106763254,
+      "run_id": 36779778283,
+      "workflow_name": "ci",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU19abc8AAAAZot_f9g",
+      "head_sha": "f8ba82b0c7c6a30a023d9930592e4565ef988515",
+      "url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/actions/jobs/110106763254",
+      "html_url": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283/job/110106763254",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-09-30T21:29:42Z",
+      "started_at": "2026-09-30T21:29:45Z",
+      "completed_at": "2026-09-30T21:29:50Z",
+      "name": "secrets",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-09-30T21:29:46Z",
+          "completed_at": "2026-09-30T21:29:46Z"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-09-30T21:29:46Z",
+          "completed_at": "2026-09-30T21:29:47Z"
+        },
+        {
+          "name": "gitleaks (full history, pinned by digest)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-09-30T21:29:47Z",
+          "completed_at": "2026-09-30T21:29:49Z"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-09-30T21:29:49Z",
+          "completed_at": "2026-09-30T21:29:49Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-30T21:29:49Z",
+          "completed_at": "2026-09-30T21:29:49Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/check-runs/110106763254",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000695,
+      "runner_name": "GitHub Actions 1000000695",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 110106763448,
+      "run_id": 36779778283,
+      "workflow_name": "ci",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU19abc8AAAAZot_guA",
+      "head_sha": "f8ba82b0c7c6a30a023d9930592e4565ef988515",
+      "url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/actions/jobs/110106763448",
+      "html_url": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283/job/110106763448",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-09-30T21:29:42Z",
+      "started_at": "2026-09-30T21:29:45Z",
+      "completed_at": "2026-09-30T21:30:19Z",
+      "name": "analyzer",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-09-30T21:29:46Z",
+          "completed_at": "2026-09-30T21:29:46Z"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-09-30T21:29:46Z",
+          "completed_at": "2026-09-30T21:29:47Z"
+        },
+        {
+          "name": "PSScriptAnalyzer (zero findings)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-09-30T21:29:47Z",
+          "completed_at": "2026-09-30T21:30:17Z"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-09-30T21:30:17Z",
+          "completed_at": "2026-09-30T21:30:18Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-30T21:30:18Z",
+          "completed_at": "2026-09-30T21:30:18Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/check-runs/110106763448",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000694,
+      "runner_name": "GitHub Actions 1000000694",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 110106763483,
+      "run_id": 36779778283,
+      "workflow_name": "ci",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU19abc8AAAAZot_g2w",
+      "head_sha": "f8ba82b0c7c6a30a023d9930592e4565ef988515",
+      "url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/actions/jobs/110106763483",
+      "html_url": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283/job/110106763483",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-09-30T21:29:42Z",
+      "started_at": "2026-09-30T21:29:45Z",
+      "completed_at": "2026-09-30T21:30:10Z",
+      "name": "pester-pwsh-linux",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-09-30T21:29:47Z",
+          "completed_at": "2026-09-30T21:29:48Z"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-09-30T21:29:48Z",
+          "completed_at": "2026-09-30T21:29:49Z"
+        },
+        {
+          "name": "Pester on PowerShell 7 (Linux)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-09-30T21:29:49Z",
+          "completed_at": "2026-09-30T21:30:07Z"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-09-30T21:30:07Z",
+          "completed_at": "2026-09-30T21:30:08Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-30T21:30:08Z",
+          "completed_at": "2026-09-30T21:30:08Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/check-runs/110106763483",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000000696,
+      "runner_name": "GitHub Actions 1000000696",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 110106763521,
+      "run_id": 36779778283,
+      "workflow_name": "ci",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU19abc8AAAAZot_hAQ",
+      "head_sha": "f8ba82b0c7c6a30a023d9930592e4565ef988515",
+      "url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/actions/jobs/110106763521",
+      "html_url": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283/job/110106763521",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-09-30T21:29:42Z",
+      "started_at": "2026-09-30T21:29:45Z",
+      "completed_at": "2026-09-30T21:30:29Z",
+      "name": "pester-windows-powershell",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-09-30T21:29:46Z",
+          "completed_at": "2026-09-30T21:29:46Z"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-09-30T21:29:46Z",
+          "completed_at": "2026-09-30T21:29:53Z"
+        },
+        {
+          "name": "Pester on Windows PowerShell 5.1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-09-30T21:29:53Z",
+          "completed_at": "2026-09-30T21:30:25Z"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-09-30T21:30:25Z",
+          "completed_at": "2026-09-30T21:30:28Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-30T21:30:28Z",
+          "completed_at": "2026-09-30T21:30:28Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/check-runs/110106763521",
+      "labels": [
+        "windows-latest"
+      ],
+      "runner_id": 1000000693,
+      "runner_name": "GitHub Actions 1000000693",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 110106763535,
+      "run_id": 36779778283,
+      "workflow_name": "ci",
+      "head_branch": "main",
+      "run_url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOU19abc8AAAAZot_hDw",
+      "head_sha": "f8ba82b0c7c6a30a023d9930592e4565ef988515",
+      "url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/actions/jobs/110106763535",
+      "html_url": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283/job/110106763535",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-09-30T21:29:42Z",
+      "started_at": "2026-09-30T21:29:45Z",
+      "completed_at": "2026-09-30T21:30:13Z",
+      "name": "pester-pwsh-windows",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-09-30T21:29:46Z",
+          "completed_at": "2026-09-30T21:29:46Z"
+        },
+        {
+          "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-09-30T21:29:46Z",
+          "completed_at": "2026-09-30T21:29:53Z"
+        },
+        {
+          "name": "Pester on PowerShell 7 (Windows)",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-09-30T21:29:53Z",
+          "completed_at": "2026-09-30T21:30:10Z"
+        },
+        {
+          "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-09-30T21:30:10Z",
+          "completed_at": "2026-09-30T21:30:12Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-09-30T21:30:12Z",
+          "completed_at": "2026-09-30T21:30:12Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/santorest/lab-07-ad-m365-hygiene/check-runs/110106763535",
+      "labels": [
+        "windows-latest"
+      ],
+      "runner_id": 1000000692,
+      "runner_name": "GitHub Actions 1000000692",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ]
+}

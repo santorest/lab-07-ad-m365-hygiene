@@ -8,7 +8,6 @@ date: "2026-09-30"
 time_to_reproduce: "20–30 minutos (fork, activar Actions, ejecutar las pruebas)"
 skills: [PowerShell, Active Directory, Microsoft Graph, Microsoft Entra ID, Microsoft 365, Pester, PSScriptAnalyzer, GitHub Actions]
 frameworks: [CIS Controls v8 (5.1, 5.3, 6.1, 6.8), MITRE ATT&CK (T1558.003, T1558.004, T1078)]
-repo: "https://github.com/santorest/lab-07-ad-m365-hygiene"
 bundle: "Publicado en el sitio del portafolio con su checksum SHA-256"
 ---
 
@@ -92,7 +91,7 @@ en cada entorno.
 
 Todas las cifras provienen de ejecuciones de GitHub Actions del 2026-09-30.
 
-**Ejecución de referencia en `main`** ([run 36779778283](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36779778283)):
+**Ejecución de referencia en `main`** (run 36779778283 (2026-09-30, archivada en `evidence/runs/36779778283/`)):
 los 5 controles pasaron en la primera ejecución, en 50 segundos de tiempo real.
 
 | Control | Resultado |
@@ -114,13 +113,13 @@ lineal, sin force push ni borrado.
 
 | PR | Cambio | Qué falló | Fusión |
 |---|---|---|---|
-| [#1](https://github.com/santorest/lab-07-ad-m365-hygiene/pull/1) | Error por uno: "inactivo" pasó a ser *N o más* días en lugar de *más de N* | Los tres jobs de Pester, 5 fallos en cada uno: los casi aciertos de exactamente 90 días en AD-01, AD-02 y M365-02, el invitado de exactamente 60 días en M365-05 y la prueba de límite de la función auxiliar ([run](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780023189)) | Bloqueada |
-| [#2](https://github.com/santorest/lab-07-ad-m365-hygiene/pull/2) | Una "optimización" del recolector que llama a `Set-ADUser` para marcar las cuentas auditadas | Los tres jobs de Pester, 3 fallos en cada uno; la guarda de solo lectura informó `AdSnapshot.ps1:24 Set-ADUser` ([run](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780161982)) | Bloqueada |
+| #1 (archivado en `evidence/prs/1/`) | Error por uno: "inactivo" pasó a ser *N o más* días en lugar de *más de N* | Los tres jobs de Pester, 5 fallos en cada uno: los casi aciertos de exactamente 90 días en AD-01, AD-02 y M365-02, el invitado de exactamente 60 días en M365-05 y la prueba de límite de la función auxiliar (run 36780023189, 2026-09-30, archivada en `evidence/runs/36780023189/`) | Bloqueada |
+| #2 (archivado en `evidence/prs/2/`) | Una "optimización" del recolector que llama a `Set-ADUser` para marcar las cuentas auditadas | Los tres jobs de Pester, 3 fallos en cada uno; la guarda de solo lectura informó `AdSnapshot.ps1:24 Set-ADUser` (run 36780161982, 2026-09-30, archivada en `evidence/runs/36780161982/`) | Bloqueada |
 
 En ambos PR pasaron el analizador y gitleaks: solo las pruebas se interpusieron entre cada cambio y `main`.
 
-**Correcciones de la revisión final** ([PR #4](https://github.com/santorest/lab-07-ad-m365-hygiene/pull/4),
-[run 36889200159](https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36889200159), 2026-10-01). Una
+**Correcciones de la revisión final** (PR #4 (archivado en `evidence/prs/4/`),
+run 36889200159 (2026-10-01, archivada en `evidence/runs/36889200159/`), 2026-10-01). Una
 revisión independiente encontró tres defectos, y cada uno se corrigió con una prueba que falló primero (8 pruebas
 nuevas o ampliadas fallaron y luego pasaron). Primero, un filtro sin hallazgos hacía fallar el informe HTML y la
 exportación. Segundo, una cuenta de Microsoft 365 sin inicio de sesión ni fecha de creación se daba por activa sin

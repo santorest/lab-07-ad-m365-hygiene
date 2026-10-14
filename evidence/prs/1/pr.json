@@ -1,0 +1,87 @@
+{
+  "baseRefName": "main",
+  "body": "Demo for the write-up, not meant to merge: `Test-HygieneStale` changes from *more than* N days to *N or more* days. Expected: the three Pester jobs fail on the exactly-90-days (and exactly-60-days guest) near-miss tests; analyzer and secrets pass.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "closedAt": "2026-09-30T21:34:58Z",
+  "commits": [
+    {
+      "authoredDate": "2026-09-30T21:31:44Z",
+      "authors": [
+        {
+          "email": "37381624+santorest@users.noreply.github.com",
+          "id": "MDQ6VXNlcjM3MzgxNjI0",
+          "login": "santorest",
+          "name": "Santiago Restrepo Sánchez"
+        },
+        {
+          "email": "noreply@anthropic.com",
+          "id": "MDQ6VXNlcjgxODQ3",
+          "login": "claude",
+          "name": "Claude Opus 5.5"
+        }
+      ],
+      "committedDate": "2026-09-30T21:31:44Z",
+      "messageBody": "Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "messageHeadline": "demo: count an object as stale at exactly the threshold",
+      "oid": "3350704e905c730ce9e133047c45349b0d939cdf"
+    }
+  ],
+  "createdAt": "2026-09-30T21:31:47Z",
+  "headRefName": "demo/stale-boundary",
+  "mergedAt": null,
+  "number": 1,
+  "state": "CLOSED",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-30T21:32:53Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780023189/job/110107642361",
+      "name": "pester-windows-powershell",
+      "startedAt": "2026-09-30T21:31:57Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-30T21:32:30Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780023189/job/110107642503",
+      "name": "pester-pwsh-windows",
+      "startedAt": "2026-09-30T21:31:55Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-30T21:32:20Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780023189/job/110107642103",
+      "name": "pester-pwsh-linux",
+      "startedAt": "2026-09-30T21:31:55Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-30T21:32:35Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780023189/job/110107642281",
+      "name": "analyzer",
+      "startedAt": "2026-09-30T21:31:55Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-09-30T21:32:05Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780023189/job/110107642436",
+      "name": "secrets",
+      "startedAt": "2026-09-30T21:31:55Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    }
+  ],
+  "title": "Demo: off-by-one staleness threshold (expected to be blocked)",
+  "url": "https://github.com/santorest/lab-07-ad-m365-hygiene/pull/1"
+}

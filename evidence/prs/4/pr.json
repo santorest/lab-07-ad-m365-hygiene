@@ -1,0 +1,87 @@
+{
+  "baseRefName": "main",
+  "body": "Fix pass for the three Important findings of the final review:\n\n1. Empty finding set (a filter that matched nothing) crashed ConvertTo-HygieneHtml and Export-HygieneFinding. Now HTML renders, CSV is header-only, JSON is [].\n2. Graph users with no sign-in and no creation date read as clean in M365-02/M365-05. Now reported as stale (\"No activity and no creation date recorded.\").\n3. The read-only guard was case-sensitive (Set-AdUser passed). Now case-insensitive.\n\nEach fix has a test that failed first (8 RED, then GREEN). Locally: Pester 90/90, PSScriptAnalyzer 0 on Windows PowerShell 5.1. Example report unchanged.\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)",
+  "closedAt": "2026-10-01T16:21:20Z",
+  "commits": [
+    {
+      "authoredDate": "2026-10-01T16:04:14Z",
+      "authors": [
+        {
+          "email": "37381624+santorest@users.noreply.github.com",
+          "id": "MDQ6VXNlcjM3MzgxNjI0",
+          "login": "santorest",
+          "name": "Santiago Restrepo Sánchez"
+        },
+        {
+          "email": "noreply@anthropic.com",
+          "id": "MDQ6VXNlcjgxODQ3",
+          "login": "claude",
+          "name": "Claude Opus 5.5"
+        }
+      ],
+      "committedDate": "2026-10-01T16:04:14Z",
+      "messageBody": "…sing)\n\n- ConvertTo-HygieneHtml and Export-HygieneFinding accept a $null finding set\n  (a filter that matched nothing): HTML renders, CSV is header-only, JSON is [].\n- Test-HygieneStale reports an object with no activity and no creation date as\n  stale instead of silently clean (M365-02 / M365-05 on old Graph accounts).\n- Read-only guard matches command names case-insensitively (Set-AdUser,\n  set-aduser, Remove-MGUser were missed).\n\nEach fix has a test that failed first. Pester 90/90 and analyzer 0 on 5.1.\n\nCo-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>",
+      "messageHeadline": "fix: final review findings (empty results, undated accounts, guard ca…",
+      "oid": "0050a13771c76ced64456067120f3973934b5a05"
+    }
+  ],
+  "createdAt": "2026-10-01T16:04:20Z",
+  "headRefName": "fix/final-review",
+  "mergedAt": "2026-10-01T16:21:20Z",
+  "number": 4,
+  "state": "MERGED",
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-01T16:06:02Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36889200159/job/110460207225",
+      "name": "pester-windows-powershell",
+      "startedAt": "2026-10-01T16:04:29Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-01T16:06:00Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36889200159/job/110460206721",
+      "name": "pester-pwsh-windows",
+      "startedAt": "2026-10-01T16:04:31Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-01T16:05:35Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36889200159/job/110460207153",
+      "name": "pester-pwsh-linux",
+      "startedAt": "2026-10-01T16:04:29Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-01T16:05:53Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36889200159/job/110460207028",
+      "name": "analyzer",
+      "startedAt": "2026-10-01T16:04:30Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-01T16:04:39Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36889200159/job/110460207011",
+      "name": "secrets",
+      "startedAt": "2026-10-01T16:04:29Z",
+      "status": "COMPLETED",
+      "workflowName": "ci"
+    }
+  ],
+  "title": "fix: final review findings",
+  "url": "https://github.com/santorest/lab-07-ad-m365-hygiene/pull/4"
+}

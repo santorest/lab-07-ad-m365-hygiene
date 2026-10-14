@@ -1,0 +1,174 @@
+diff --git a/docs/checks.md b/docs/checks.md
+index 0077df8..3a802a9 100644
+--- a/docs/checks.md
++++ b/docs/checks.md
+@@ -2,7 +2,8 @@
+ 
+ All age thresholds are **strict**: an object is stale when the days since its last activity are *greater than* the
+ threshold, counted back from the snapshot's `collectedAt` (never from the current clock). An object that never had any
+-activity is judged by its creation date instead. Settings live in `src/HygieneToolkit/Data/defaults.psd1` and can be
++activity is judged by its creation date instead; if neither date is recorded (Graph leaves `createdDateTime` empty for
++some old accounts) the object is reported as stale with "No activity and no creation date recorded." Settings live in `src/HygieneToolkit/Data/defaults.psd1` and can be
+ overridden per run with `Invoke-HygieneAudit -Settings @{ ... }`.
+ 
+ A check whose data was not collected, or whose collector call failed, returns one **Not evaluated** finding that
+diff --git a/src/HygieneToolkit/Private/Stale.ps1 b/src/HygieneToolkit/Private/Stale.ps1
+index 4f9672c..15c3c90 100644
+--- a/src/HygieneToolkit/Private/Stale.ps1
++++ b/src/HygieneToolkit/Private/Stale.ps1
+@@ -14,5 +14,7 @@ function Test-HygieneStale {
+     if ($null -ne $createdAge -and $createdAge -gt $Days) {
+         return ('Never active; created {0} days before collection.' -f [int][math]::Floor($createdAge))
+     }
++    # Graph leaves createdDateTime empty for some old accounts; with no activity either, nothing proves the object is in use.
++    if ($null -eq $createdAge) { return 'No activity and no creation date recorded.' }
+     $null
+ }
+diff --git a/src/HygieneToolkit/Report/Export.ps1 b/src/HygieneToolkit/Report/Export.ps1
+index 2c6846c..57de284 100644
+--- a/src/HygieneToolkit/Report/Export.ps1
++++ b/src/HygieneToolkit/Report/Export.ps1
+@@ -4,12 +4,16 @@ function Export-HygieneFinding {
+     Writes findings as CSV or JSON (UTF-8 without BOM). JSON is always an array.
+     #>
+     [CmdletBinding()]
+-    param([Parameter(Mandatory)] [AllowEmptyCollection()] [object[]] $Finding, [Parameter(Mandatory)] [string] $Path,
++    param([Parameter(Mandatory)] [AllowNull()] [AllowEmptyCollection()] [object[]] $Finding, [Parameter(Mandatory)] [string] $Path,
+         [Parameter(Mandatory)] [ValidateSet('Csv', 'Json')] [string] $Format)
+     $full = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($Path)
+     $fields = 'CheckId', 'Title', 'Severity', 'Status', 'ObjectType', 'Identity', 'Detail', 'Remediation', 'Reference'
+-    $rows = @($Finding | Select-Object -Property $fields)
+-    if ($Format -eq 'Csv') {
++    # A filter that matched nothing arrives as $null; it is an empty result, not an error.
++    $rows = @($Finding | Where-Object { $null -ne $_ } | Select-Object -Property $fields)
++    if ($rows.Count -eq 0) {
++        # ConvertTo-Csv writes nothing (no header) for no rows, and Windows PowerShell 5.1 ConvertTo-Json does not write [].
++        if ($Format -eq 'Csv') { $text = '"' + ($fields -join '","') + '"' } else { $text = '[]' }
++    } elseif ($Format -eq 'Csv') {
+         $text = ($rows | ConvertTo-Csv -NoTypeInformation) -join "`n"
+     } else {
+         $text = ConvertTo-Json -InputObject $rows -Depth 5
+diff --git a/src/HygieneToolkit/Report/Html.ps1 b/src/HygieneToolkit/Report/Html.ps1
+index 265ff76..20a01ae 100644
+--- a/src/HygieneToolkit/Report/Html.ps1
++++ b/src/HygieneToolkit/Report/Html.ps1
+@@ -19,8 +19,10 @@ function ConvertTo-HygieneHtml {
+     #>
+     [CmdletBinding()]
+     [OutputType([string])]
+-    param([Parameter(Mandatory)] [AllowEmptyCollection()] [object[]] $Finding, [Parameter(Mandatory)] [object] $CollectedAt,
++    param([Parameter(Mandatory)] [AllowNull()] [AllowEmptyCollection()] [object[]] $Finding, [Parameter(Mandatory)] [object] $CollectedAt,
+         [string] $Source = '', [string] $Path)
++    # A filter that matched nothing arrives as $null; it is an empty result, not an error.
++    $Finding = @($Finding | Where-Object { $null -ne $_ })
+     $collected = Format-HygieneDate $CollectedAt
+     $real = @($Finding | Where-Object { $_.Status -eq 'Finding' })
+     $sb = New-Object Text.StringBuilder
+diff --git a/tests/GraphChecks.Tests.ps1 b/tests/GraphChecks.Tests.ps1
+index 4f57ebe..44e3ff2 100644
+--- a/tests/GraphChecks.Tests.ps1
++++ b/tests/GraphChecks.Tests.ps1
+@@ -45,6 +45,16 @@ Describe 'M365-02 unused licenses' {
+         ($f | Where-Object Status -eq 'NotEvaluated').Detail | Should -Match 'sign-in data.*premium license'
+         ($f | Where-Object Status -eq 'Finding').Identity | Should -Be 'off@corp.example'
+     }
++    It 'flags a licensed user with no sign-in and no creation date' {
++        $s = New-TestSnapshot -Graph @{
++            users          = @(New-TestGraphUser -Upn 'old@corp.example' -Id 'o' -Licenses $E5 -Created $null)
++            signIns        = @(SignIn 'o' $null)
++            subscribedSkus = @()
++        }
++        $f = Get-TestFinding -Snapshot $s -CheckId 'M365-02'
++        $f.Identity | Should -Be 'old@corp.example'
++        $f.Detail | Should -Be 'Licensed but inactive. No activity and no creation date recorded.'
++    }
+ }
+ 
+ Describe 'M365-03 Global Administrator count' {
+@@ -106,4 +116,11 @@ Describe 'M365-05 stale guests' {
+         ($f | Where-Object Status -eq 'Finding').Identity | Should -Be 'p90#EXT#'
+         @($f | Where-Object Status -eq 'NotEvaluated').Count | Should -Be 1
+     }
++    It 'flags an accepted guest with no sign-in and no creation date' {
++        $s = New-TestSnapshot -Graph @{
++            users   = @(New-TestGraphUser -Upn 'old#EXT#' -Id 'g1' -UserType Guest -ExternalState 'Accepted' -Created $null)
++            signIns = @(SignIn 'g1' $null)
++        }
++        (Get-TestFinding -Snapshot $s -CheckId 'M365-05').Identity | Should -Be 'old#EXT#'
++    }
+ }
+diff --git a/tests/Private.Tests.ps1 b/tests/Private.Tests.ps1
+index 7ca01ba..45420b2 100644
+--- a/tests/Private.Tests.ps1
++++ b/tests/Private.Tests.ps1
+@@ -50,6 +50,11 @@ Describe 'Test-HygieneStale' {
+             Test-HygieneStale -LastActivity $null -Created '2026-09-01T12:00:00Z' -AsOf '2026-09-30T12:00:00Z' -Days 90
+         } | Should -BeNullOrEmpty
+     }
++    It 'is stale when neither activity nor a creation date is recorded' {
++        InModuleScope HygieneToolkit {
++            Test-HygieneStale -LastActivity $null -Created $null -AsOf '2026-09-30T12:00:00Z' -Days 90
++        } | Should -Be 'No activity and no creation date recorded.'
++    }
+ }
+ 
+ Describe 'Get-HygieneSetting' {
+diff --git a/tests/ReadOnly.Tests.ps1 b/tests/ReadOnly.Tests.ps1
+index e631af6..2c8667b 100644
+--- a/tests/ReadOnly.Tests.ps1
++++ b/tests/ReadOnly.Tests.ps1
+@@ -5,7 +5,8 @@ BeforeAll {
+ Describe 'Write-command predicate' {
+     It 'flags <Name>' -ForEach @(
+         @{ Name = 'Set-ADUser' }, @{ Name = 'New-ADUser' }, @{ Name = 'Remove-MgUser' }, @{ Name = 'Update-MgUser' },
+-        @{ Name = 'Invoke-MgGraphRequest' }, @{ Name = 'Add-ADGroupMember' }, @{ Name = 'Invoke-Expression' }
++        @{ Name = 'Invoke-MgGraphRequest' }, @{ Name = 'Add-ADGroupMember' }, @{ Name = 'Invoke-Expression' },
++        @{ Name = 'Set-AdUser' }, @{ Name = 'set-aduser' }, @{ Name = 'Remove-MGUser' }, @{ Name = 'invoke-mggraphrequest' }
+     ) {
+         Test-WriteCommandName $Name | Should -BeTrue
+     }
+diff --git a/tests/Report.Tests.ps1 b/tests/Report.Tests.ps1
+index 08ed122..fc376b1 100644
+--- a/tests/Report.Tests.ps1
++++ b/tests/Report.Tests.ps1
+@@ -29,6 +29,10 @@ Describe 'ConvertTo-HygieneHtml' {
+         }
+         ConvertTo-HygieneHtml -Finding @($bad) -CollectedAt $CollectedAt | Should -Not -Match 'javascript:'
+     }
++    It 'renders a report when nothing matched' {
++        $none = Invoke-HygieneAudit -Snapshot (New-TestSnapshot) | Where-Object CheckId -eq 'none'
++        ConvertTo-HygieneHtml -Finding $none -CollectedAt $CollectedAt | Should -Match '<h2>Summary</h2>'
++    }
+     It 'writes a UTF-8 file without BOM when -Path is given' {
+         $path = Join-Path $TestDrive 'r.html'
+         ConvertTo-HygieneHtml -Finding @() -CollectedAt $CollectedAt -Path $path
+@@ -48,6 +52,15 @@ Describe 'Export-HygieneFinding' {
+         (Import-Csv $csv).Identity | Should -Be 'a'
+         ([IO.File]::ReadAllText($json)).TrimStart()[0] | Should -Be '['
+     }
++    It 'writes a header-only CSV and an empty JSON array when nothing matched' {
++        $none = Invoke-HygieneAudit -Snapshot (New-TestSnapshot) | Where-Object CheckId -eq 'none'
++        $csv = Join-Path $TestDrive 'none.csv'
++        $json = Join-Path $TestDrive 'none.json'
++        Export-HygieneFinding -Finding $none -Path $csv -Format Csv
++        Export-HygieneFinding -Finding $none -Path $json -Format Json
++        ([IO.File]::ReadAllText($csv)).Trim() | Should -Be '"CheckId","Title","Severity","Status","ObjectType","Identity","Detail","Remediation","Reference"'
++        ([IO.File]::ReadAllText($json)).Trim() | Should -Be '[]'
++    }
+ }
+ 
+ Describe 'Example report' {
+diff --git a/tests/TestHelpers.ps1 b/tests/TestHelpers.ps1
+index 324ef0a..1f15999 100644
+--- a/tests/TestHelpers.ps1
++++ b/tests/TestHelpers.ps1
+@@ -85,7 +85,8 @@ function Test-WriteCommandName {
+     # True for AD/Graph cmdlets that are not reads, and for raw Graph requests or dynamic code.
+     param([Parameter(Mandatory)] [string] $Name)
+     if ($Name -eq 'Invoke-MgGraphRequest' -or $Name -eq 'Invoke-Expression') { return $true }
+-    if ($Name -cmatch '^(?<verb>[A-Z][a-z]+)-(AD|Mg)[A-Z]') { return $Matches.verb -ne 'Get' }
++    # Command names are case-insensitive, so Set-AdUser and set-aduser must be caught as well as Set-ADUser.
++    if ($Name -imatch '^(?<verb>[a-z]+)-(ad|mg)[a-z]') { return $Matches.verb -ne 'Get' }
+     $false
+ }
+ 

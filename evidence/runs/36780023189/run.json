@@ -1,0 +1,15 @@
+{
+  "id": 36780023189,
+  "name": "ci",
+  "head_sha": "3350704e905c730ce9e133047c45349b0d939cdf",
+  "head_branch": "demo/stale-boundary",
+  "event": "pull_request",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2026-09-30T21:31:51Z",
+  "run_started_at": "2026-09-30T21:31:51Z",
+  "updated_at": "2026-09-30T21:32:54Z",
+  "run_attempt": 1,
+  "html_url": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780023189",
+  "artifacts": []
+}

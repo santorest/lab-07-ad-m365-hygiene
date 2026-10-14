@@ -1,0 +1,15 @@
+{
+  "id": 36780161982,
+  "name": "ci",
+  "head_sha": "102f0bb433bb8236289468d6c079e7e7cff654b2",
+  "head_branch": "demo/collector-writes",
+  "event": "pull_request",
+  "status": "completed",
+  "conclusion": "failure",
+  "created_at": "2026-09-30T21:33:09Z",
+  "run_started_at": "2026-09-30T21:33:09Z",
+  "updated_at": "2026-09-30T21:34:33Z",
+  "run_attempt": 1,
+  "html_url": "https://github.com/santorest/lab-07-ad-m365-hygiene/actions/runs/36780161982",
+  "artifacts": []
+}
